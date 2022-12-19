@@ -1,0 +1,2 @@
+spark-submit --packages io.delta:delta-core_2.12:2.1.0 --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" --class UKTrafficAnalysis --master yarn --num-executors 10 --driver-memory 2g --executor-memory 2g --executor-cores 2 uk-traffic-analysis.jar ${YOUR_BUCKET_NAME}
+// Instead of YOUR_BUCKET_NAME parameter add your bucket name which includes uk-traffic folder with data
