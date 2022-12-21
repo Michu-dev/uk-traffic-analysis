@@ -1,0 +1,1160 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%md\n**1. Number of vehicles (measure) in the following regions (first dimension), divided by weather type (second dimension) for a chosen year and month (third dimension).**",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T10:55:47+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<p><strong>1. Number of vehicles (measure) in the following regions (first dimension), divided by weather type (second dimension) for a chosen year and month (third dimension).</strong></p>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147144_1539190494",
+      "id": "paragraph_1671557420139_839958942",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:56248"
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T11:04:49+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": true,
+          "completionSupport": false,
+          "language": "markdown"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620686775_1595471037",
+      "id": "paragraph_1671620686775_1595471037",
+      "dateCreated": "2022-12-21T11:04:46+0000",
+      "dateStarted": "2022-12-21T11:04:49+0000",
+      "dateFinished": "2022-12-21T11:04:54+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56249"
+    },
+    {
+      "text": "val factDF = spark.read.format(\"delta\").load(\"/tmp/delta/fact\")\n                            .select(\"region_id\", \"weather_id\", \"timestamp_id\", \"sum_all_motor_vehicles\")\nval timeDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_time\")\n                            .select(\"timestamp_id\", \"year\", \"month\", \"day\")\nval weatherDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_weather\")\n                            .select(\"weather_id\", \"weather_condition\")\nval regionsDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_regions\")\n                            .select(\"region_id\", \"region_name\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T11:13:06+0000",
+      "progress": 92,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "name": "michal1"
+        },
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mfactDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_id: bigint, weather_id: string ... 2 more fields]\n\u001b[1m\u001b[34mtimeDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [timestamp_id: bigint, year: int ... 2 more fields]\n\u001b[1m\u001b[34mweatherDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [weather_id: string, weather_condition: string]\n\u001b[1m\u001b[34mregionsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_id: bigint, region_name: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=2",
+              "$$hashKey": "object:56778"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=3",
+              "$$hashKey": "object:56779"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=4",
+              "$$hashKey": "object:56780"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=5",
+              "$$hashKey": "object:56781"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=6",
+              "$$hashKey": "object:56782"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=7",
+              "$$hashKey": "object:56783"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=8",
+              "$$hashKey": "object:56784"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=9",
+              "$$hashKey": "object:56785"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=10",
+              "$$hashKey": "object:56786"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=11",
+              "$$hashKey": "object:56787"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=12",
+              "$$hashKey": "object:56788"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:37043/jobs/job?id=13",
+              "$$hashKey": "object:56789"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147145_1203928384",
+      "id": "paragraph_1671557578165_1801070587",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "dateStarted": "2022-12-21T11:13:06+0000",
+      "dateFinished": "2022-12-21T11:14:01+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56250"
+    },
+    {
+      "text": "import io.delta.implicits._\nval analysis1DF = factDF.\n    join(timeDF, factDF(\"timestamp_id\") === timeDF(\"timestamp_id\")).\n    join(weatherDF, factDF(\"weather_id\") === weatherDF(\"weather_id\")).\n    join(regionsDF, factDF(\"region_id\") === regionsDF(\"region_id\")).\n    withColumn(\"particular_month\", concat(timeDF(\"year\"), lit(\"-\"), timeDF(\"month\"))).\n    groupBy(col(\"particular_month\"), regionsDF(\"region_name\")).\n    pivot(\"weather_condition\").\n    agg(sum(\"sum_all_motor_vehicles\").as(\"sum_all_motor_vehicles\"))",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T11:09:21+0000",
+      "progress": 20,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import io.delta.implicits._\n\u001b[1m\u001b[34manalysis1DF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [particular_month: string, region_name: string ... 10 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=12",
+              "$$hashKey": "object:56891"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=13",
+              "$$hashKey": "object:56892"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=14",
+              "$$hashKey": "object:56893"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=15",
+              "$$hashKey": "object:56894"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=19",
+              "$$hashKey": "object:56895"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=20",
+              "$$hashKey": "object:56896"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=21",
+              "$$hashKey": "object:56897"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:40449/jobs/job?id=22",
+              "$$hashKey": "object:56898"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147145_1260743565",
+      "id": "paragraph_1671558553094_1518781811",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "dateStarted": "2022-12-21T11:09:21+0000",
+      "dateFinished": "2022-12-21T11:10:57+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56251"
+    },
+    {
+      "text": "val vehicles_number = analysis1DF.\n    where($\"particular_month\" === z.textbox(\"particular month (yyyy-MM)\"))\n\nvehicles_number.createOrReplaceTempView(\"analysis1_vehicles_number\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T11:11:00+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "weather condition": "",
+          "region name": "Scotland",
+          "year": "",
+          "particular month (yyyy-MM)": "2011-10"
+        },
+        "forms": {
+          "particular month (yyyy-MM)": {
+            "type": "TextBox",
+            "name": "particular month (yyyy-MM)",
+            "displayName": "particular month (yyyy-MM)",
+            "defaultValue": "",
+            "hidden": false,
+            "$$hashKey": "object:56446"
+          }
+        }
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mvehicles_number\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [particular_month: string, region_name: string ... 10 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147146_1802281160",
+      "id": "paragraph_1671560172469_435997484",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "dateStarted": "2022-12-21T11:11:00+0000",
+      "dateFinished": "2022-12-21T11:11:00+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56252"
+    },
+    {
+      "text": "%sql\nselect * from analysis1_vehicles_number",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T12:47:12+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 11,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 718.844,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "particular_month": "string",
+                      "region_name": "string",
+                      "Fine with high winds": "string",
+                      "Fine without high winds": "string",
+                      "Fog or mist": "string",
+                      "Other": "string",
+                      "Raining with high winds": "string",
+                      "Raining without high winds": "string",
+                      "Snowing with high winds": "string",
+                      "Snowing without high winds": "string",
+                      "Unknown": "string",
+                      "null": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-90"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": false
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "region_name",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "Fine with high winds",
+                  "index": 2,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Fine without high winds",
+                  "index": 3,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Fog or mist",
+                  "index": 4,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Other",
+                  "index": 5,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Raining with high winds",
+                  "index": 6,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Raining without high winds",
+                  "index": 7,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Snowing with high winds",
+                  "index": 8,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Snowing without high winds",
+                  "index": 9,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Unknown",
+                  "index": 10,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "null",
+                  "index": 11,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "particular_month\tregion_name\tFine with high winds\tFine without high winds\tFog or mist\tOther\tRaining with high winds\tRaining without high winds\tSnowing with high winds\tSnowing without high winds\tUnknown\tnull\n2011-10\tNorth East\t5.0673797E7\t1.15867862E8\t184040.0\t3.1659919E7\t3.0035877E7\t8.73125E7\t647637.0\t3467298.0\t5.1557265E7\tnull\n2011-10\tSouth West\t5.2386129E7\t1.13894573E8\t294292.0\t3.1841399E7\t2.7246071E7\t8.5652901E7\t357216.0\t1661352.0\t4.8597613E7\tnull\n2011-10\tEast of England\t8.4093353E7\t2.09187229E8\t1466988.0\t6.2246041E7\t4.2255731E7\t1.49830464E8\t871263.0\t1649172.0\t7.6629935E7\tnull\n2011-10\tWest Midlands\t7.8568348E7\t1.55499838E8\t1018756.0\t4.7897039E7\t4.8181975E7\t1.15485843E8\t1133319.0\t603780.0\t5.6041333E7\tnull\n2011-10\tYorkshire and The Humber\t4.8626474E7\t9.8959937E7\t358104.0\t2.9615162E7\t2.7419533E7\t6.7438228E7\t749934.0\t192966.0\t3.4761644E7\tnull\n2011-10\tLondon\t8.6395331E7\t1.98637484E8\t1295332.0\t6.0345406E7\t4.080294E7\t1.37875658E8\t3065982.0\t283794.0\t7.6562503E7\tnull\n2011-10\tSouth East\t1.52993684E8\t2.68976649E8\t1489520.0\t8.766869E7\t8.3528475E7\t1.95386497E8\t2572065.0\t1142310.0\t1.04709405E8\tnull\n2011-10\tScotland\t3.4751776E7\t9.258284E7\t375987.0\t2.1908968E7\t1.6325434E7\t6.3118918E7\t627690.0\t1962894.0\t4.0219253E7\tnull\n2011-10\tEast Midlands\t5.4288899E7\t9.9525556E7\t962508.0\t2.8654592E7\t3.0502904E7\t7.7375076E7\t240462.0\t1363290.0\t3.8640986E7\tnull\n2011-10\tWales\t5.9684557E7\t8.8648692E7\t153424.0\t2.9517747E7\t2.8464894E7\t7.1111836E7\t1086105.0\t215760.0\t3.6808753E7\tnull\n2011-10\tNorth West\t1.11447873E8\t2.05953993E8\t1644664.0\t6.8122041E7\t6.1666188E7\t1.51909775E8\t1298385.0\t673032.0\t7.8147902E7\tnull\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147146_198783012",
+      "id": "paragraph_1671560485591_1196096694",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "status": "READY",
+      "$$hashKey": "object:56253"
+    },
+    {
+      "text": "%md\n**2. Number of trucks (measure) in the following regions (first dimension), divided by road type (second dimension) for a chosen year and month (third dimension).**",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T10:55:47+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<p><strong>2. Number of trucks (measure) in the following regions (first dimension), divided by road type (second dimension) for a chosen year and month (third dimension).</strong></p>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147146_17633873",
+      "id": "paragraph_1671562533917_1423333069",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "status": "READY",
+      "$$hashKey": "object:56254"
+    },
+    {
+      "text": "val factDF = spark.read.format(\"delta\").load(\"/tmp/delta/fact\")\n                            .select(\"region_id\", \"local_authority_id\", \"timestamp_id\", \"sum_all_hgvs\", \"count_point_id\")\nval dataDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_data\")\n                            .select(\"count_point_id\", \"road_type\")\nval regionsDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_regions\")\n                            .select(\"region_id\", \"region_name\")\n// val authDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_authority\")\n//                             .select(\"local_authority_id\", \"local_authority_name\")\nval timeDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_time\")\n                            .select(\"timestamp_id\", \"year\", \"month\", \"day\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T11:34:51+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mfactDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_id: bigint, local_authority_id: bigint ... 3 more fields]\n\u001b[1m\u001b[34mdataDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: bigint, road_type: string]\n\u001b[1m\u001b[34mregionsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_id: bigint, region_name: string]\n\u001b[1m\u001b[34mtimeDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [timestamp_id: bigint, year: int ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147147_841124944",
+      "id": "paragraph_1671563791184_2140292651",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "dateStarted": "2022-12-21T11:34:51+0000",
+      "dateFinished": "2022-12-21T11:34:51+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56255"
+    },
+    {
+      "text": "",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T10:55:47+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147147_1463687262",
+      "id": "paragraph_1671565351050_1399919496",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "status": "READY",
+      "$$hashKey": "object:56256"
+    },
+    {
+      "text": "val analysis2DF = factDF.\n    join(timeDF, factDF(\"timestamp_id\") === timeDF(\"timestamp_id\")).\n    join(dataDF, factDF(\"count_point_id\") === dataDF(\"count_point_id\")).\n    join(regionsDF, factDF(\"region_id\") === regionsDF(\"region_id\")).\n    withColumn(\"particular_month\", concat(timeDF(\"year\"), lit(\"-\"), timeDF(\"month\"))).\n    groupBy(col(\"particular_month\"), regionsDF(\"region_name\")).\n    pivot(\"road_type\").\n    agg(sum(\"sum_all_hgvs\").as(\"sum_all_trucks\"))",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T11:36:15+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34manalysis2DF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [particular_month: string, region_name: string ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=23",
+              "$$hashKey": "object:57268"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=24",
+              "$$hashKey": "object:57269"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=25",
+              "$$hashKey": "object:57270"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=26",
+              "$$hashKey": "object:57271"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=30",
+              "$$hashKey": "object:57272"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=31",
+              "$$hashKey": "object:57273"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=32",
+              "$$hashKey": "object:57274"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=33",
+              "$$hashKey": "object:57275"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671622379138_105447963",
+      "id": "paragraph_1671622379138_105447963",
+      "dateCreated": "2022-12-21T11:32:59+0000",
+      "dateStarted": "2022-12-21T11:36:15+0000",
+      "dateFinished": "2022-12-21T12:38:53+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56257"
+    },
+    {
+      "text": "val trucks_number = analysis2DF.\n    where($\"particular_month\" === z.textbox(\"particular month (yyyy-MM)\"))\n\ntrucks_number.createOrReplaceTempView(\"analysis2_trucks_number\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T12:43:13+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "count_point_id": "string",
+                      "direction_of_travel": "string",
+                      "road_name": "string",
+                      "road_type": "string",
+                      "pedal_cycles": "string",
+                      "two_wheeled_motor_vehicles": "string",
+                      "cars_and_taxis": "string",
+                      "buses_and_coaches": "string",
+                      "lgvs": "string",
+                      "all_hgvs": "string",
+                      "all_motor_vehicles": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "particular month (yyyy-MM)": "2011-10"
+        },
+        "forms": {
+          "particular month (yyyy-MM)": {
+            "type": "TextBox",
+            "name": "particular month (yyyy-MM)",
+            "displayName": "particular month (yyyy-MM)",
+            "defaultValue": "",
+            "hidden": false,
+            "$$hashKey": "object:58652"
+          }
+        }
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mtrucks_number\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [particular_month: string, region_name: string ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671620147148_1670665131",
+      "id": "paragraph_1671563878389_1720868446",
+      "dateCreated": "2022-12-21T10:55:47+0000",
+      "dateStarted": "2022-12-21T12:43:13+0000",
+      "dateFinished": "2022-12-21T12:43:13+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56258"
+    },
+    {
+      "text": "%sql\nselect * from analysis2_trucks_number",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T12:47:27+0000",
+      "progress": 16,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "sql"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "particular_month": "string",
+                      "region_name": "string",
+                      "Aberdeen City": "string",
+                      "Aberdeenshire": "string",
+                      "Angus": "string",
+                      "Argyll & Bute": "string",
+                      "Barking and Dagenham": "string",
+                      "Barnet": "string",
+                      "Barnsley": "string",
+                      "Bath and North East Somerset": "string",
+                      "Bedford": "string",
+                      "Bedfordshire": "string",
+                      "Bexley": "string",
+                      "Birmingham": "string",
+                      "Blackburn with Darwen": "string",
+                      "Blackpool": "string",
+                      "Blaenau Gwent": "string",
+                      "Bolton": "string",
+                      "Bournemouth": "string",
+                      "Bracknell Forest": "string",
+                      "Bradford": "string",
+                      "Brent": "string",
+                      "Bridgend": "string",
+                      "Brighton and Hove": "string",
+                      "Bristol, City of": "string",
+                      "Bromley": "string",
+                      "Buckinghamshire": "string",
+                      "Bury": "string",
+                      "Caerphilly": "string",
+                      "Calderdale": "string",
+                      "Cambridgeshire": "string",
+                      "Camden": "string",
+                      "Cardiff": "string",
+                      "Carmarthenshire": "string",
+                      "Central Bedfordshire": "string",
+                      "Ceredigion": "string",
+                      "Cheshire": "string",
+                      "City of Edinburgh": "string",
+                      "City of London": "string",
+                      "Clackmannanshire": "string",
+                      "Comhairle nan Eilean Siar": "string",
+                      "Conwy": "string",
+                      "Cornwall excluding Isles of Scilly": "string",
+                      "Coventry": "string",
+                      "Croydon": "string",
+                      "Cumbria": "string",
+                      "Darlington": "string",
+                      "Denbighshire": "string",
+                      "Derby": "string",
+                      "Derbyshire": "string",
+                      "Devon": "string",
+                      "Doncaster": "string",
+                      "Dorset": "string",
+                      "Dudley": "string",
+                      "Dumfries & Galloway": "string",
+                      "Dundee City": "string",
+                      "Durham": "string",
+                      "Ealing": "string",
+                      "East Ayrshire": "string",
+                      "East Cheshire": "string",
+                      "East Dunbartonshire": "string",
+                      "East Lothian": "string",
+                      "East Renfrewshire": "string",
+                      "East Riding of Yorkshire": "string",
+                      "East Sussex": "string",
+                      "Enfield": "string",
+                      "Essex": "string",
+                      "Falkirk": "string",
+                      "Fife": "string",
+                      "Flintshire": "string",
+                      "Gateshead": "string",
+                      "Glasgow City": "string",
+                      "Gloucestershire": "string",
+                      "Greenwich": "string",
+                      "Gwynedd": "string",
+                      "Hackney": "string",
+                      "Halton": "string",
+                      "Hammersmith and Fulham": "string",
+                      "Hampshire": "string",
+                      "Haringey": "string",
+                      "Harrow": "string",
+                      "Hartlepool": "string",
+                      "Havering": "string",
+                      "Herefordshire, County of": "string",
+                      "Hertfordshire": "string",
+                      "Highland": "string",
+                      "Hillingdon": "string",
+                      "Hounslow": "string",
+                      "Inverclyde": "string",
+                      "Isle of Anglesey": "string",
+                      "Isle of Wight": "string",
+                      "Isles of Scilly": "string",
+                      "Islington": "string",
+                      "Kensington and Chelsea": "string",
+                      "Kent": "string",
+                      "Kingston upon Hull, City of": "string",
+                      "Kingston upon Thames": "string",
+                      "Kirklees": "string",
+                      "Knowsley": "string",
+                      "Lambeth": "string",
+                      "Lancashire": "string",
+                      "Leeds": "string",
+                      "Leicester": "string",
+                      "Leicestershire": "string",
+                      "Lewisham": "string",
+                      "Lincolnshire": "string",
+                      "Liverpool": "string",
+                      "Luton": "string",
+                      "Manchester": "string",
+                      "Medway": "string",
+                      "Merthyr Tydfil": "string",
+                      "Merton": "string",
+                      "Middlesbrough": "string",
+                      "Midlothian": "string",
+                      "Milton Keynes": "string",
+                      "Monmouthshire": "string",
+                      "Moray": "string",
+                      "Neath Port Talbot": "string",
+                      "Newcastle upon Tyne": "string",
+                      "Newham": "string",
+                      "Newport": "string",
+                      "Norfolk": "string",
+                      "North Ayrshire": "string",
+                      "North East Lincolnshire": "string",
+                      "North Lanarkshire": "string",
+                      "North Lincolnshire": "string",
+                      "North Somerset": "string",
+                      "North Tyneside": "string",
+                      "North Yorkshire": "string",
+                      "Northamptonshire": "string",
+                      "Northumberland": "string",
+                      "Nottingham": "string",
+                      "Nottinghamshire": "string",
+                      "Oldham": "string",
+                      "Orkney Islands": "string",
+                      "Oxfordshire": "string",
+                      "Pembrokeshire": "string",
+                      "Perth & Kinross": "string",
+                      "Peterborough": "string",
+                      "Plymouth": "string",
+                      "Poole": "string",
+                      "Portsmouth": "string",
+                      "Powys": "string",
+                      "Reading": "string",
+                      "Redbridge": "string",
+                      "Redcar and Cleveland": "string",
+                      "Renfrewshire": "string",
+                      "Rhondda, Cynon, Taff": "string",
+                      "Richmond upon Thames": "string",
+                      "Rochdale": "string",
+                      "Rotherham": "string",
+                      "Rutland": "string",
+                      "Salford": "string",
+                      "Sandwell": "string",
+                      "Scottish Borders": "string",
+                      "Sefton": "string",
+                      "Sheffield": "string",
+                      "Shetland Islands": "string",
+                      "Shropshire": "string",
+                      "Slough": "string",
+                      "Solihull": "string",
+                      "Somerset": "string",
+                      "South Ayrshire": "string",
+                      "South Gloucestershire": "string",
+                      "South Lanarkshire": "string",
+                      "South Tyneside": "string",
+                      "Southampton": "string",
+                      "Southend-on-Sea": "string",
+                      "Southwark": "string",
+                      "St. Helens": "string",
+                      "Staffordshire": "string",
+                      "Stirling": "string",
+                      "Stockport": "string",
+                      "Stockton-on-Tees": "string",
+                      "Stoke-on-Trent": "string",
+                      "Suffolk": "string",
+                      "Sunderland": "string",
+                      "Surrey": "string",
+                      "Sutton": "string",
+                      "Swansea": "string",
+                      "Swindon": "string",
+                      "Tameside": "string",
+                      "Telford and Wrekin": "string",
+                      "The Vale of Glamorgan": "string",
+                      "Thurrock": "string",
+                      "Torbay": "string",
+                      "Torfaen": "string",
+                      "Tower Hamlets": "string",
+                      "Trafford": "string",
+                      "Wakefield": "string",
+                      "Walsall": "string",
+                      "Waltham Forest": "string",
+                      "Wandsworth": "string",
+                      "Warrington": "string",
+                      "Warwickshire": "string",
+                      "West Berkshire": "string",
+                      "West Cheshire": "string",
+                      "West Dunbartonshire": "string",
+                      "West Lothian": "string",
+                      "West Sussex": "string",
+                      "Westminster": "string",
+                      "Wigan": "string",
+                      "Wiltshire": "string",
+                      "Windsor and Maidenhead": "string",
+                      "Wirral": "string",
+                      "Wokingham": "string",
+                      "Wolverhampton": "string",
+                      "Worcestershire": "string",
+                      "Wrexham": "string",
+                      "York": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": true
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "region_name",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "Minor",
+                  "index": 3,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Major",
+                  "index": 2,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "particular_month\tregion_name\tMajor\tMinor\n2011-10\tNorth East\t1.488235416E9\t8.2346964E7\n2011-10\tSouth West\t1.052432736E9\t1.83548448E8\n2011-10\tEast of England\t5.55908124E9\t2.66597856E8\n2011-10\tWest Midlands\t1.826637624E9\t2.15996844E8\n2011-10\tYorkshire and The Humber\t1.00583274E9\t1.55794344E8\n2011-10\tLondon\t3.911804712E9\t4.55451576E8\n2011-10\tSouth East\t3.9694782E9\t2.8693278E8\n2011-10\tScotland\t6.87833784E8\t1.17606588E8\n2011-10\tEast Midlands\t1.214293908E9\t1.86169968E8\n2011-10\tWales\t1.470726792E9\t8.7645288E7\n2011-10\tNorth West\t2.133954996E9\t2.01290928E8\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=34",
+              "$$hashKey": "object:59826"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=35",
+              "$$hashKey": "object:59827"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=36",
+              "$$hashKey": "object:59828"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=37",
+              "$$hashKey": "object:59829"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=41",
+              "$$hashKey": "object:59830"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=42",
+              "$$hashKey": "object:59831"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:42641/jobs/job?id=43",
+              "$$hashKey": "object:59832"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671621765342_1865614150",
+      "id": "paragraph_1671621765342_1865614150",
+      "dateCreated": "2022-12-21T11:22:45+0000",
+      "dateStarted": "2022-12-21T12:43:17+0000",
+      "dateFinished": "2022-12-21T12:45:44+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:56259"
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-21T11:23:21+0000",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1671621801706_931455971",
+      "id": "paragraph_1671621801706_931455971",
+      "dateCreated": "2022-12-21T11:23:21+0000",
+      "status": "READY",
+      "$$hashKey": "object:56260"
+    }
+  ],
+  "name": "Analysis_uk_traffic",
+  "id": "2HM3KSEUR",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.10.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Analysis_uk_traffic"
+}
