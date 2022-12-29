@@ -24,25 +24,25 @@ with DAG(
                                   --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
                                   --class UKTrafficAnalysis \
                                   --master yarn \
-                                  --num-executors 10 \
-                                  --driver-memory 2g \
+                                  --num-executors 8 \
+                                  --driver-memory 4g \
                                   --executor-memory 2g \
                                   --executor-cores 2 \
                                   {{ params.jars_home }}/fact.jar {{ params.bucket_name }}"""
   )
 
-  load_data_dim = BashOperator(
-    task_id="load_data_dim",
+  load_road_dim = BashOperator(
+    task_id="load_road_dim",
     bash_command=""" spark-submit --packages io.delta:delta-core_2.12:2.1.0 \
                                   --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
                                   --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
                                   --class UKTrafficAnalysis \
                                   --master yarn \
-                                  --num-executors 10 \
-                                  --driver-memory 2g \
+                                  --num-executors 8 \
+                                  --driver-memory 4g \
                                   --executor-memory 2g \
                                   --executor-cores 2 \
-                                  {{ params.jars_home }}/dim_data.jar {{ params.bucket_name }}"""
+                                  {{ params.jars_home }}/dim_road.jar {{ params.bucket_name }}"""
   )
 
   load_weather_dim = BashOperator(
@@ -52,25 +52,25 @@ with DAG(
                                     --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
                                     --class UKTrafficAnalysis \
                                     --master yarn \
-                                    --num-executors 10 \
-                                    --driver-memory 2g \
+                                    --num-executors 8 \
+                                    --driver-memory 4g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
                                     {{ params.jars_home }}/dim_weather.jar {{ params.bucket_name }}"""
     )
 
-  load_authority_dim = BashOperator(
-      task_id="load_authority_dim",
+  load_hgvs_dim = BashOperator(
+      task_id="load_hgvs_dim",
       bash_command=""" spark-submit --packages io.delta:delta-core_2.12:2.1.0 \
                                     --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
                                     --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
                                     --class UKTrafficAnalysis \
                                     --master yarn \
-                                    --num-executors 10 \
-                                    --driver-memory 2g \
+                                    --num-executors 8 \
+                                    --driver-memory 4g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
-                                    {{ params.jars_home }}/dim_authority.jar {{ params.bucket_name }}"""
+                                    {{ params.jars_home }}/dim_hgvs.jar {{ params.bucket_name }}"""
     )
 
   load_regions_dim = BashOperator(
@@ -80,8 +80,8 @@ with DAG(
                                     --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
                                     --class UKTrafficAnalysis \
                                     --master yarn \
-                                    --num-executors 10 \
-                                    --driver-memory 2g \
+                                    --num-executors 8 \
+                                    --driver-memory 4g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
                                     {{ params.jars_home }}/dim_regions.jar {{ params.bucket_name }}"""
@@ -94,8 +94,8 @@ with DAG(
                                     --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
                                     --class UKTrafficAnalysis \
                                     --master yarn \
-                                    --num-executors 10 \
-                                    --driver-memory 2g \
+                                    --num-executors 8 \
+                                    --driver-memory 4g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
                                     {{ params.jars_home }}/dim_time.jar {{ params.bucket_name }}"""
@@ -103,8 +103,8 @@ with DAG(
 
 
 
-load_authority_dim >> load_regions_dim
 load_regions_dim >> load_weather_dim
-load_weather_dim >> load_data_dim
-load_data_dim >> load_time_dim
+load_weather_dim >> load_road_dim
+load_road_dim >> load_hgvs_dim
+load_hgvs_dim >> load_time_dim
 load_time_dim >> load_fact_table
