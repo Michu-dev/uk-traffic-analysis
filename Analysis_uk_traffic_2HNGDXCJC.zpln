@@ -1,0 +1,1639 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "import org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\nimport spark.implicits._\nimport org.apache.spark.sql.expressions.Window",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:15:14+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql._\nimport org.apache.spark.sql.functions._\nimport spark.implicits._\nimport org.apache.spark.sql.expressions.Window\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672404546136_1726991734",
+      "id": "paragraph_1672404546136_1726991734",
+      "dateCreated": "2022-12-30T12:49:06+0000",
+      "dateStarted": "2022-12-30T13:15:14+0000",
+      "dateFinished": "2022-12-30T13:15:48+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:167"
+    },
+    {
+      "text": "val authDF = spark.read.option(\"header\", true).csv(s\"gs://putbigdatakw/uk-traffic/authorities*.csv\")\nval regionsDF = spark.read.option(\"header\", true).csv(s\"gs://putbigdatakw/uk-traffic/regions*.csv\")\n\nval dimRegionDF = authDF.join(regionsDF, \"region_ons_code\").select(monotonically_increasing_id().cast(\"int\").alias(\"region_auth_id\"), col(\"region_id\").cast(\"int\"), $\"region_name\", $\"local_authority_name\", $\"local_authority_ons_code\")\n\n// dimRegionDF.show(100, false)\ndimRegionDF.write.format(\"delta\").mode(\"overwrite\").save(\"/tmp/delta/dim_regions\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:38:31+0000",
+      "progress": 1,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mauthDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [local_authority_ons_code: string, local_authority_id: string ... 2 more fields]\n\u001b[1m\u001b[34mregionsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_id: string, region_name: string ... 1 more field]\n\u001b[1m\u001b[34mdimRegionDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, region_id: int ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=117",
+              "$$hashKey": "object:808"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=118",
+              "$$hashKey": "object:809"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=120",
+              "$$hashKey": "object:810"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=121",
+              "$$hashKey": "object:811"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=122",
+              "$$hashKey": "object:812"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=123",
+              "$$hashKey": "object:813"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=124",
+              "$$hashKey": "object:814"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672404632372_144438785",
+      "id": "paragraph_1672404632372_144438785",
+      "dateCreated": "2022-12-30T12:50:32+0000",
+      "dateStarted": "2022-12-30T13:38:31+0000",
+      "dateFinished": "2022-12-30T13:38:55+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:168"
+    },
+    {
+      "text": "val weatherRDD = sc.textFile(s\"gs://putbigdatakw/uk-traffic/weather.txt\")\n\nval processedWeatherRDD = weatherRDD.map{\n    inString =>\n      val regionRegEx = \"\"\"(?<=of )(.*)(?= on)\"\"\".r\n      val dateRegEx = \"\"\"(?<= on )(.*)(?= at)\"\"\".r\n      val timeRegEx = \"\"\"(?<=at )(.*)(?= the)\"\"\".r\n      val conditionRegEx = \"\"\"(?<=reported: )(.*)\"\"\".r\n      val region = regionRegEx.findFirstIn(inString)\n      val date = dateRegEx.findFirstIn(inString)\n      val time = timeRegEx.findFirstIn(inString)\n      val condition = conditionRegEx.findFirstIn(inString)\n      (region, date, time, condition)\n  }\n\nval weatherDF = processedWeatherRDD.toDF(\"local_authority_ons_code\", \"date\", \"time\", \"condition\").withColumn(\"date\", to_date(col(\"date\"), \"dd/MM/yyyy\"))\nval dimRegionDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_regions\")\nval windowId = Window.partitionBy(\"weather_id\").orderBy(col(\"cnt\").desc)\n\nval dimWeatherDF = weatherDF\n                    .join(dimRegionDF, \"local_authority_ons_code\")\n                    .withColumn(\"weather_id\", concat(date_format(col(\"date\"), \"yyyyMMdd\"), col(\"time\").substr(0,2), col(\"region_auth_id\")))\n                    .groupBy(\"weather_id\", \"condition\").agg(count(\"condition\").alias(\"cnt\"))\n                    .withColumn(\"row\", row_number().over(windowId))\n                    .where(\"row = 1\")\n                    .select(col(\"weather_id\").cast(\"long\"), $\"condition\")\n\n// dimWeatherDF.show(100, false)\n\ndimWeatherDF.write.format(\"delta\").mode(\"overwrite\").save(\"/tmp/delta/dim_weather\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:38:58+0000",
+      "progress": 84,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mweatherRDD\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m = gs://putbigdatakw/uk-traffic/weather.txt MapPartitionsRDD[679] at textFile at <console>:39\n\u001b[1m\u001b[34mprocessedWeatherRDD\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[(Option[String], Option[String], Option[String], Option[String])]\u001b[0m = MapPartitionsRDD[680] at map at <console>:41\n\u001b[1m\u001b[34mweatherDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [local_authority_ons_code: string, date: date ... 2 more fields]\n\u001b[1m\u001b[34mdimRegionDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, region_id: int ... 3 more fields]\n\u001b[1m\u001b[34mwindowId\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.expressions.WindowSpec\u001b[0m = org.apache.spark.sql.expressions.WindowSpec@1cb12583\n\u001b[1m\u001b[34mdimWeatherDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spa...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=125",
+              "$$hashKey": "object:884"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=127",
+              "$$hashKey": "object:885"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=128",
+              "$$hashKey": "object:886"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=129",
+              "$$hashKey": "object:887"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=130",
+              "$$hashKey": "object:888"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=131",
+              "$$hashKey": "object:889"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=132",
+              "$$hashKey": "object:890"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=133",
+              "$$hashKey": "object:891"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672405078509_1134529107",
+      "id": "paragraph_1672405078509_1134529107",
+      "dateCreated": "2022-12-30T12:57:58+0000",
+      "dateStarted": "2022-12-30T13:38:58+0000",
+      "dateFinished": "2022-12-30T13:39:40+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:169"
+    },
+    {
+      "text": "val mainDF = spark.read.option(\"header\", true).csv(\"gs://putbigdatakw/uk-traffic/mainData*.csv\")\n\nval dimRoadDF = mainDF.select(col(\"count_point_id\").cast(\"long\"), $\"road_category\", $\"road_type\").distinct()\n\n// dimRoadDF.show(100, false)\n\ndimRoadDF.write.format(\"delta\").mode(\"overwrite\").save(\"/tmp/delta/dim_road\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:39:47+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mmainDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: string, direction_of_travel: string ... 28 more fields]\n\u001b[1m\u001b[34mdimRoadDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [count_point_id: bigint, road_category: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=134",
+              "$$hashKey": "object:965"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=135",
+              "$$hashKey": "object:966"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=136",
+              "$$hashKey": "object:967"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=137",
+              "$$hashKey": "object:968"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=138",
+              "$$hashKey": "object:969"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=139",
+              "$$hashKey": "object:970"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=140",
+              "$$hashKey": "object:971"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672406838439_185798758",
+      "id": "paragraph_1672406838439_185798758",
+      "dateCreated": "2022-12-30T13:27:18+0000",
+      "dateStarted": "2022-12-30T13:39:47+0000",
+      "dateFinished": "2022-12-30T13:39:59+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:170"
+    },
+    {
+      "text": "val mainDF = spark.read.option(\"header\", true).csv(\"gs://putbigdatakw/uk-traffic/mainData*.csv\")\n\nval dimHgvsDF = mainDF.select(\n                            col(\"count_point_id\").cast(\"long\"), \n                            col(\"hgvs_2_rigid_axle\").cast(\"int\"), \n                            col(\"hgvs_3_rigid_axle\").cast(\"int\"), \n                            col(\"hgvs_4_or_more_rigid_axle\").cast(\"int\"), \n                            col(\"hgvs_3_or_4_articulated_axle\").cast(\"int\"), \n                            col(\"hgvs_5_articulated_axle\").cast(\"int\"), \n                            col(\"hgvs_6_articulated_axle\").cast(\"int\")).distinct()\n\n// dimHgvsDF.show(100, false)\n\ndimHgvsDF.write.format(\"delta\").mode(\"overwrite\").save(\"/tmp/delta/dim_hgvs\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:40:03+0000",
+      "progress": 88,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mmainDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: string, direction_of_travel: string ... 28 more fields]\n\u001b[1m\u001b[34mdimHgvsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [count_point_id: bigint, hgvs_2_rigid_axle: int ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=141",
+              "$$hashKey": "object:1041"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=142",
+              "$$hashKey": "object:1042"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=143",
+              "$$hashKey": "object:1043"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=144",
+              "$$hashKey": "object:1044"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=145",
+              "$$hashKey": "object:1045"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=146",
+              "$$hashKey": "object:1046"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=147",
+              "$$hashKey": "object:1047"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672406999541_1370225043",
+      "id": "paragraph_1672406999541_1370225043",
+      "dateCreated": "2022-12-30T13:29:59+0000",
+      "dateStarted": "2022-12-30T13:40:03+0000",
+      "dateFinished": "2022-12-30T13:40:23+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:171"
+    },
+    {
+      "text": "val mainDF = spark.read.option(\"header\", true).csv(\"gs://putbigdatakw/uk-traffic/mainData*.csv\")\n                .withColumn(\"timestamp_id\", concat(date_format(col(\"count_date\"), \"yyyyMMdd\"), col(\"hour\")).cast(\"int\"))\n\nval dimTimeDF = mainDF.select(col(\"timestamp_id\").cast(\"long\"))\n      .withColumn(\"year\", col(\"timestamp_id\").substr(0,4).cast(\"int\"))\n      .withColumn(\"month\", col(\"timestamp_id\").substr(5,2).cast(\"int\"))\n      .withColumn(\"day\", col(\"timestamp_id\").substr(7,2).cast(\"int\"))\n      .withColumn(\"hour\", col(\"timestamp_id\").substr(9,2).cast(\"int\")).distinct()\n      \n// dimTimeDF.show(100, false)\n\ndimTimeDF.write.format(\"delta\").mode(\"overwrite\").save(\"/tmp/delta/dim_time\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:40:26+0000",
+      "progress": 70,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mmainDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: string, direction_of_travel: string ... 29 more fields]\n\u001b[1m\u001b[34mdimTimeDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [timestamp_id: bigint, year: int ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=148",
+              "$$hashKey": "object:1117"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=149",
+              "$$hashKey": "object:1118"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=150",
+              "$$hashKey": "object:1119"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=151",
+              "$$hashKey": "object:1120"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=152",
+              "$$hashKey": "object:1121"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=153",
+              "$$hashKey": "object:1122"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=154",
+              "$$hashKey": "object:1123"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672407110902_1752018944",
+      "id": "paragraph_1672407110902_1752018944",
+      "dateCreated": "2022-12-30T13:31:50+0000",
+      "dateStarted": "2022-12-30T13:40:26+0000",
+      "dateFinished": "2022-12-30T13:40:43+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:172"
+    },
+    {
+      "text": "val mainDF = spark.read.option(\"header\", true).csv(\"gs://putbigdatakw/uk-traffic/mainData*.csv\")\n                .withColumn(\"timestamp_id\", concat(date_format(col(\"count_date\"), \"yyyyMMdd\"), col(\"hour\")).cast(\"long\"))\n                .withColumn(\"local_authority_ons_code\", $\"local_authoirty_ons_code\")\n\nval factDF = mainDF.join(dimRegionDF, \"local_authority_ons_code\")\n                   .withColumn(\"weather_id\", concat($\"timestamp_id\", $\"region_auth_id\"))\n                   .groupBy(\"timestamp_id\", \"count_point_id\", \"weather_id\", \"region_auth_id\")\n                   .agg(sum($\"pedal_cycles\").cast(\"int\").alias(\"sum_pedal_cycles\"), \n                        sum($\"two_wheeled_motor_vehicles\").cast(\"int\").alias(\"sum_two_wheeled_motor_vehicles\"), \n                        sum($\"cars_and_taxis\").cast(\"int\").alias(\"sum_cars_and_taxis\"), \n                        sum($\"buses_and_coaches\").cast(\"int\").alias(\"sum_buses_and_coaches\"), \n                        sum(\"lgvs\").cast(\"int\").alias(\"sum_lgvs\"), \n                        sum($\"all_hgvs\").cast(\"int\").alias(\"sum_hgvs\"), \n                        sum($\"all_motor_vehicles\").cast(\"int\").alias(\"sum_all_motor_vehicles\"))\n                   .withColumn(\"sum_all_vehicles\", $\"sum_all_motor_vehicles\" + $\"sum_pedal_cycles\")\n\n// factDF.show(100, false)\n\nfactDF.write.format(\"delta\").mode(\"overwrite\").save(\"/tmp/delta/fact\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:40:45+0000",
+      "progress": 86,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mmainDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: string, direction_of_travel: string ... 30 more fields]\n\u001b[1m\u001b[34mfactDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [timestamp_id: bigint, count_point_id: string ... 10 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=155",
+              "$$hashKey": "object:1193"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=156",
+              "$$hashKey": "object:1194"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=158",
+              "$$hashKey": "object:1195"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=159",
+              "$$hashKey": "object:1196"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=160",
+              "$$hashKey": "object:1197"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=161",
+              "$$hashKey": "object:1198"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=162",
+              "$$hashKey": "object:1199"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=163",
+              "$$hashKey": "object:1200"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672407281066_1813501620",
+      "id": "paragraph_1672407281066_1813501620",
+      "dateCreated": "2022-12-30T13:34:41+0000",
+      "dateStarted": "2022-12-30T13:40:45+0000",
+      "dateFinished": "2022-12-30T13:41:29+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:173"
+    },
+    {
+      "text": "%md\n**1. Number of vehicles (measure) in the following regions (first dimension), divided by weather type (second dimension) for a chosen year and month (third dimension).**",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T11:37:02+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<p><strong>1. Number of vehicles (measure) in the following regions (first dimension), divided by weather type (second dimension) for a chosen year and month (third dimension).</strong></p>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222929_444313238",
+      "id": "paragraph_1671557420139_839958942",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "READY",
+      "$$hashKey": "object:174"
+    },
+    {
+      "text": "val factDF = spark.read.format(\"delta\").load(\"/tmp/delta/fact\")\n                            .select(\"region_auth_id\", \"weather_id\", \"timestamp_id\", \"sum_all_motor_vehicles\")\nval timeDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_time\")\n                            .select(\"timestamp_id\", \"year\", \"month\")\nval weatherDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_weather\")\n                            .select(\"weather_id\", \"condition\")\nval regionsDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_regions\")\n                            .select(\"region_auth_id\", \"region_id\", \"region_name\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:41:49+0000",
+      "progress": 1,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "name": "michal1"
+        },
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mfactDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, weather_id: string ... 2 more fields]\n\u001b[1m\u001b[34mtimeDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [timestamp_id: bigint, year: int ... 1 more field]\n\u001b[1m\u001b[34mweatherDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [weather_id: bigint, condition: string]\n\u001b[1m\u001b[34mregionsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, region_id: int ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222930_1297249280",
+      "id": "paragraph_1671557578165_1801070587",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "dateStarted": "2022-12-30T13:41:49+0000",
+      "dateFinished": "2022-12-30T13:41:50+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:175"
+    },
+    {
+      "text": "import io.delta.implicits._\nval analysis1DF = factDF.\n    join(timeDF, \"timestamp_id\").\n    join(weatherDF, \"weather_id\").\n    join(regionsDF, \"region_auth_id\").\n    withColumn(\"particular_month\", concat(timeDF(\"year\"), lit(\"-\"), timeDF(\"month\"))).\n    groupBy(col(\"particular_month\"), regionsDF(\"region_name\")).\n    pivot(\"condition\").\n    agg(sum(\"sum_all_motor_vehicles\").as(\"sum_all_motor_vehicles\"))",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:44:08+0000",
+      "progress": 16,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import io.delta.implicits._\n\u001b[1m\u001b[34manalysis1DF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [particular_month: string, region_name: string ... 10 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=178",
+              "$$hashKey": "object:2538"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=179",
+              "$$hashKey": "object:2539"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=180",
+              "$$hashKey": "object:2540"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=181",
+              "$$hashKey": "object:2541"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=185",
+              "$$hashKey": "object:2542"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=186",
+              "$$hashKey": "object:2543"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=187",
+              "$$hashKey": "object:2544"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=188",
+              "$$hashKey": "object:2545"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222930_606598396",
+      "id": "paragraph_1671558553094_1518781811",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "dateStarted": "2022-12-30T13:44:08+0000",
+      "dateFinished": "2022-12-30T13:44:18+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:176"
+    },
+    {
+      "text": "val vehicles_number = analysis1DF.\n    where($\"particular_month\" === z.textbox(\"particular month (yyyy-MM)\"))\n\nvehicles_number.createOrReplaceTempView(\"analysis1_vehicles_number\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:44:25+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "weather condition": "",
+          "region name": "Scotland",
+          "year": "",
+          "particular month (yyyy-MM)": "2011-10"
+        },
+        "forms": {
+          "particular month (yyyy-MM)": {
+            "type": "TextBox",
+            "name": "particular month (yyyy-MM)",
+            "displayName": "particular month (yyyy-MM)",
+            "defaultValue": "",
+            "hidden": false,
+            "$$hashKey": "object:2616"
+          }
+        }
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mvehicles_number\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [particular_month: string, region_name: string ... 10 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222931_1102791153",
+      "id": "paragraph_1671560172469_435997484",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:177",
+      "dateFinished": "2022-12-30T13:44:25+0000",
+      "dateStarted": "2022-12-30T13:44:25+0000"
+    },
+    {
+      "text": "%sql\nselect * from analysis1_vehicles_number",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:44:51+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 11,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 718.844,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "particular_month": "string",
+                      "region_name": "string",
+                      "Fine with high winds": "string",
+                      "Fine without high winds": "string",
+                      "Fog or mist": "string",
+                      "Other": "string",
+                      "Raining with high winds": "string",
+                      "Raining without high winds": "string",
+                      "Snowing with high winds": "string",
+                      "Snowing without high winds": "string",
+                      "Unknown": "string",
+                      "null": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-90"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": false
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "region_name",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "Fine with high winds",
+                  "index": 2,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Fine without high winds",
+                  "index": 3,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Fog or mist",
+                  "index": 4,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Other",
+                  "index": 5,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Raining with high winds",
+                  "index": 6,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Raining without high winds",
+                  "index": 7,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Snowing with high winds",
+                  "index": 8,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Snowing without high winds",
+                  "index": 9,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "Unknown",
+                  "index": 10,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "null",
+                  "index": 11,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "particular_month\tregion_name\tFine with high winds\tFine without high winds\tFog or mist\tOther\tRaining with high winds\tRaining without high winds\tSnowing with high winds\tSnowing without high winds\tUnknown\tnull\n2011-10\tNorth East\t29051\t331302\tnull\t94\t4838\t17509\tnull\tnull\t5734\tnull\n2011-10\tSouth West\t16280\t493282\tnull\t8340\t5029\t77483\tnull\tnull\t11744\tnull\n2011-10\tEast of England\t32696\t702969\tnull\t1527\t1987\t42326\tnull\tnull\t7499\tnull\n2011-10\tWest Midlands\t23374\t407888\tnull\t271\t5\t38044\tnull\tnull\t4243\tnull\n2011-10\tYorkshire and The Humber\t5527\t616414\tnull\t2084\t5125\t23183\tnull\tnull\t9105\tnull\n2011-10\tLondon\t52233\t585329\tnull\t7619\t21086\t52756\tnull\tnull\t11682\tnull\n2011-10\tSouth East\t23031\t863893\tnull\t5014\t8583\t60535\tnull\tnull\t11959\tnull\n2011-10\tScotland\t53961\t916663\tnull\t8379\t20378\t131594\tnull\tnull\t25618\tnull\n2011-10\tEast Midlands\t10437\t287141\tnull\t1494\t8290\t26497\tnull\tnull\t5713\tnull\n2011-10\tWales\t17513\t378926\tnull\t8187\t1697\t26499\tnull\tnull\t7719\tnull\n2011-10\tNorth West\t43468\t713672\tnull\t10370\t18364\t109579\tnull\tnull\t15604\tnull\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=189",
+              "$$hashKey": "object:6355"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=190",
+              "$$hashKey": "object:6356"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=191",
+              "$$hashKey": "object:6357"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=192",
+              "$$hashKey": "object:6358"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=196",
+              "$$hashKey": "object:6359"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=197",
+              "$$hashKey": "object:6360"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=198",
+              "$$hashKey": "object:6361"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222931_475943858",
+      "id": "paragraph_1671560485591_1196096694",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:178",
+      "dateFinished": "2022-12-30T13:44:41+0000",
+      "dateStarted": "2022-12-30T13:44:33+0000"
+    },
+    {
+      "text": "%md\n**2. Number of trucks (measure) in the following regions (first dimension), divided by road category (second dimension) for a chosen year and month (third dimension).**",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:50:19+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<p><strong>2. Number of trucks (measure) in the following regions (first dimension), divided by road category (second dimension) for a chosen year and month (third dimension).</strong></p>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222931_2090220985",
+      "id": "paragraph_1671562533917_1423333069",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:179",
+      "dateFinished": "2022-12-30T13:49:54+0000",
+      "dateStarted": "2022-12-30T13:49:51+0000"
+    },
+    {
+      "text": "val factDF = spark.read.format(\"delta\").load(\"/tmp/delta/fact\")\n                            .select(\"region_auth_id\", \"timestamp_id\", \"sum_hgvs\", \"count_point_id\")\nval roadDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_road\")\n                            .select(\"count_point_id\", \"road_type\", \"road_category\")\nval regionsDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_regions\")\n                            .select(\"region_auth_id\", \"region_name\")\nval timeDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_time\")\n                            .select(\"timestamp_id\", \"year\", \"month\", \"day\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:48:02+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mfactDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, timestamp_id: bigint ... 2 more fields]\n\u001b[1m\u001b[34mroadDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: bigint, road_type: string ... 1 more field]\n\u001b[1m\u001b[34mregionsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, region_name: string]\n\u001b[1m\u001b[34mtimeDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [timestamp_id: bigint, year: int ... 2 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222931_1537514350",
+      "id": "paragraph_1671563791184_2140292651",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:180",
+      "dateFinished": "2022-12-30T13:48:03+0000",
+      "dateStarted": "2022-12-30T13:48:02+0000"
+    },
+    {
+      "text": "val analysis2DF = factDF.\n    join(timeDF, \"timestamp_id\").\n    join(roadDF, \"count_point_id\").\n    join(regionsDF, \"region_auth_id\").\n    withColumn(\"particular_month\", concat(timeDF(\"year\"), lit(\"-\"), timeDF(\"month\"))).\n    groupBy(col(\"particular_month\"), regionsDF(\"region_name\")).\n    pivot(\"road_category\").\n    agg(sum(\"sum_hgvs\").as(\"sum_trucks\"))",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:48:39+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34manalysis2DF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [particular_month: string, region_name: string ... 6 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=231",
+              "$$hashKey": "object:7656"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=232",
+              "$$hashKey": "object:7657"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=233",
+              "$$hashKey": "object:7658"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=234",
+              "$$hashKey": "object:7659"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=238",
+              "$$hashKey": "object:7660"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=239",
+              "$$hashKey": "object:7661"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=240",
+              "$$hashKey": "object:7662"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=241",
+              "$$hashKey": "object:7663"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222931_505494508",
+      "id": "paragraph_1671622379138_105447963",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:182",
+      "dateFinished": "2022-12-30T13:48:43+0000",
+      "dateStarted": "2022-12-30T13:48:39+0000"
+    },
+    {
+      "text": "val trucks_number = analysis2DF.\n    where($\"particular_month\" === z.textbox(\"particular month (yyyy-MM)\"))\n\ntrucks_number.createOrReplaceTempView(\"analysis2_trucks_number\")",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:48:46+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "count_point_id": "string",
+                      "direction_of_travel": "string",
+                      "road_name": "string",
+                      "road_type": "string",
+                      "pedal_cycles": "string",
+                      "two_wheeled_motor_vehicles": "string",
+                      "cars_and_taxis": "string",
+                      "buses_and_coaches": "string",
+                      "lgvs": "string",
+                      "all_hgvs": "string",
+                      "all_motor_vehicles": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "particular month (yyyy-MM)": "2011-10"
+        },
+        "forms": {
+          "particular month (yyyy-MM)": {
+            "type": "TextBox",
+            "name": "particular month (yyyy-MM)",
+            "displayName": "particular month (yyyy-MM)",
+            "defaultValue": "",
+            "hidden": false,
+            "$$hashKey": "object:7733"
+          }
+        }
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mtrucks_number\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [particular_month: string, region_name: string ... 6 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222932_2003027524",
+      "id": "paragraph_1671563878389_1720868446",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:183",
+      "dateFinished": "2022-12-30T13:48:46+0000",
+      "dateStarted": "2022-12-30T13:48:46+0000"
+    },
+    {
+      "text": "%sql\nselect * from analysis2_trucks_number",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T13:49:33+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "sql"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300,
+              "optionOpen": true,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "particular_month": "string",
+                      "region_name": "string",
+                      "MB": "string",
+                      "MCU": "string",
+                      "PA": "string",
+                      "PM": "string",
+                      "TA": "string",
+                      "TM": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default",
+                  "stacked": true
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "region_name",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "MB",
+                  "index": 2,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "MCU",
+                  "index": 3,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "PA",
+                  "index": 4,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "PM",
+                  "index": 5,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "TA",
+                  "index": 6,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "TM",
+                  "index": 7,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "particular_month\tregion_name\tMB\tMCU\tPA\tPM\tTA\tTM\n2011-10\tNorth East\t6240\t2758\t36671\tnull\t44114\tnull\n2011-10\tSouth West\t4707\t3802\t62520\t1176\t27252\t9665\n2011-10\tEast of England\t7700\t3040\t65475\tnull\t99276\t19252\n2011-10\tWest Midlands\t4522\t4457\t58326\tnull\t58128\t3896\n2011-10\tYorkshire and The Humber\t6342\t2763\t68510\t1176\t41279\t5399\n2011-10\tLondon\t12377\t8650\t134018\tnull\t86090\t9898\n2011-10\tSouth East\t7642\t4162\t71987\tnull\t80209\t9371\n2011-10\tScotland\t10217\t8536\t125367\tnull\t71058\t13687\n2011-10\tEast Midlands\t3627\t2040\t39700\tnull\t30246\t10610\n2011-10\tWales\t5119\t3286\t43876\tnull\t78985\t3350\n2011-10\tNorth West\t9503\t6230\t115798\tnull\t51644\t42182\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=242",
+              "$$hashKey": "object:10123"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=243",
+              "$$hashKey": "object:10124"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=244",
+              "$$hashKey": "object:10125"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=245",
+              "$$hashKey": "object:10126"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=249",
+              "$$hashKey": "object:10127"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=250",
+              "$$hashKey": "object:10128"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=251",
+              "$$hashKey": "object:10129"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222932_503298300",
+      "id": "paragraph_1671621765342_1865614150",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:184",
+      "dateFinished": "2022-12-30T13:48:52+0000",
+      "dateStarted": "2022-12-30T13:48:48+0000"
+    },
+    {
+      "text": "%md\n**3. Number of trucks (measure) on the following road category (first dimension), divided by truck category (second dimension) for a chosen region (third dimension).**",
+      "user": "anonymous",
+      "dateUpdated": "2022-12-30T14:00:33+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": true,
+          "completionSupport": false,
+          "language": "markdown"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672400222932_2129732710",
+      "id": "paragraph_1671621801706_931455971",
+      "dateCreated": "2022-12-30T11:37:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:185",
+      "dateFinished": "2022-12-30T14:00:33+0000",
+      "dateStarted": "2022-12-30T14:00:33+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<p><strong>3. Number of trucks (measure) on the following road category (first dimension), divided by truck category (second dimension) for a chosen region (third dimension).</strong></p>\n\n</div>"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672408316451_1668869138",
+      "id": "paragraph_1672408316451_1668869138",
+      "dateCreated": "2022-12-30T13:51:56+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:10383",
+      "text": "val factDF = spark.read.format(\"delta\").load(\"/tmp/delta/fact\")\n                            .select(\"region_auth_id\", \"timestamp_id\", \"sum_hgvs\", \"count_point_id\")\nval roadDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_road\")\n                            .select(\"count_point_id\", \"road_type\", \"road_category\")\nval regionsDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_regions\")\n                            .select(\"region_auth_id\", \"region_name\")\nval hgvsDF = spark.read.format(\"delta\").load(\"/tmp/delta/dim_hgvs\")",
+      "dateUpdated": "2022-12-30T13:52:37+0000",
+      "dateFinished": "2022-12-30T13:52:09+0000",
+      "dateStarted": "2022-12-30T13:52:08+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mfactDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, timestamp_id: bigint ... 2 more fields]\n\u001b[1m\u001b[34mroadDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: bigint, road_type: string ... 1 more field]\n\u001b[1m\u001b[34mregionsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, region_name: string]\n\u001b[1m\u001b[34mtimeDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [timestamp_id: bigint, year: int ... 2 more fields]\n\u001b[1m\u001b[34mhgvsDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [count_point_id: bigint, hgvs_2_rigid_axle: int ... 5 more fields]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=252",
+              "$$hashKey": "object:10613"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=253",
+              "$$hashKey": "object:10614"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672408433877_718623030",
+      "id": "paragraph_1672408433877_718623030",
+      "dateCreated": "2022-12-30T13:53:53+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:10499",
+      "text": "hgvsDF.show(100,false)",
+      "dateUpdated": "2022-12-30T13:54:04+0000",
+      "dateFinished": "2022-12-30T13:54:06+0000",
+      "dateStarted": "2022-12-30T13:54:04+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+-----------------+-----------------+-------------------------+----------------------------+-----------------------+-----------------------+\n|count_point_id|hgvs_2_rigid_axle|hgvs_3_rigid_axle|hgvs_4_or_more_rigid_axle|hgvs_3_or_4_articulated_axle|hgvs_5_articulated_axle|hgvs_6_articulated_axle|\n+--------------+-----------------+-----------------+-------------------------+----------------------------+-----------------------+-----------------------+\n|28766         |2                |0                |0                        |0                           |0                      |0                      |\n|56290         |22               |3                |2                        |3                           |9                      |8                      |\n|46070         |36               |6                |5                        |6                           |8                      |4                      |\n|47033         |2                |0                |0                        |0                           |0                      |0                      |\n|74791         |2                |0                |0                        |0                           |0                      |0                      |\n|26970         |15               |4                |13                       |4                           |3                      |0                      |\n|37098         |4                |0                |1                        |0                           |0                      |0                      |\n|942578        |9                |0                |0                        |0                           |0                      |0                      |\n|79994         |93               |7                |5                        |7                           |2                      |9                      |\n|966480        |2                |0                |0                        |0                           |0                      |0                      |\n|38099         |27               |7                |5                        |7                           |7                      |30                     |\n|46308         |11               |1                |1                        |1                           |0                      |0                      |\n|9042          |63               |21               |16                       |21                          |53                     |140                    |\n|36126         |24               |1                |0                        |1                           |3                      |5                      |\n|56311         |22               |4                |2                        |4                           |0                      |3                      |\n|70032         |7                |2                |3                        |2                           |2                      |1                      |\n|900002        |0                |0                |0                        |0                           |0                      |0                      |\n|942325        |2                |0                |0                        |0                           |0                      |0                      |\n|946565        |0                |0                |0                        |0                           |0                      |0                      |\n|990136        |2                |0                |0                        |0                           |0                      |0                      |\n|27586         |17               |4                |0                        |4                           |9                      |8                      |\n|56297         |25               |6                |2                        |6                           |0                      |2                      |\n|946792        |0                |0                |0                        |0                           |0                      |0                      |\n|966991        |5                |1                |0                        |1                           |0                      |0                      |\n|6824          |10               |2                |1                        |2                           |2                      |0                      |\n|99249         |62               |13               |9                        |13                          |13                     |13                     |\n|942020        |0                |0                |0                        |0                           |0                      |0                      |\n|946820        |0                |0                |0                        |0                           |0                      |0                      |\n|966251        |8                |0                |0                        |0                           |0                      |1                      |\n|46381         |10               |2                |5                        |2                           |5                      |5                      |\n|48041         |136              |17               |23                       |17                          |39                     |240                    |\n|945802        |0                |0                |0                        |0                           |0                      |0                      |\n|942704        |0                |0                |0                        |0                           |0                      |0                      |\n|946413        |1                |0                |0                        |0                           |0                      |0                      |\n|946651        |0                |0                |0                        |0                           |0                      |0                      |\n|941566        |2                |0                |0                        |0                           |1                      |0                      |\n|99900         |0                |0                |0                        |0                           |0                      |0                      |\n|99901         |135              |18               |29                       |18                          |10                     |9                      |\n|26676         |91               |4                |21                       |4                           |54                     |30                     |\n|942708        |0                |0                |0                        |0                           |0                      |0                      |\n|46711         |7                |1                |4                        |1                           |15                     |13                     |\n|947491        |3                |0                |0                        |0                           |0                      |0                      |\n|942268        |2                |0                |0                        |0                           |0                      |0                      |\n|945877        |0                |0                |0                        |0                           |0                      |0                      |\n|947302        |0                |0                |0                        |0                           |0                      |2                      |\n|9049          |12               |2                |0                        |2                           |11                     |5                      |\n|47047         |7                |1                |0                        |1                           |1                      |0                      |\n|951638        |5                |1                |0                        |1                           |4                      |6                      |\n|8723          |0                |2                |1                        |2                           |0                      |0                      |\n|942189        |0                |0                |0                        |0                           |0                      |0                      |\n|6503          |44               |8                |12                       |8                           |17                     |15                     |\n|16124         |50               |6                |11                       |6                           |22                     |13                     |\n|956167        |1                |0                |0                        |0                           |0                      |0                      |\n|75401         |49               |9                |5                        |9                           |3                      |7                      |\n|28852         |4                |0                |1                        |0                           |3                      |0                      |\n|46956         |11               |0                |0                        |0                           |1                      |0                      |\n|56968         |2                |0                |0                        |0                           |0                      |0                      |\n|931172        |1                |0                |0                        |0                           |0                      |0                      |\n|952983        |0                |0                |0                        |0                           |0                      |0                      |\n|56374         |2                |0                |0                        |0                           |0                      |1                      |\n|6643          |9                |2                |1                        |2                           |0                      |0                      |\n|28332         |53               |15               |4                        |15                          |7                      |2                      |\n|931555        |3                |1                |1                        |1                           |0                      |0                      |\n|7795          |3                |1                |2                        |1                           |0                      |0                      |\n|26401         |4                |0                |0                        |0                           |0                      |0                      |\n|46940         |4                |3                |0                        |3                           |1                      |1                      |\n|942735        |3                |0                |0                        |0                           |0                      |0                      |\n|945128        |2                |0                |2                        |0                           |0                      |1                      |\n|947375        |1                |0                |0                        |0                           |0                      |0                      |\n|16789         |21               |3                |4                        |3                           |0                      |1                      |\n|942812        |0                |0                |0                        |0                           |0                      |0                      |\n|945150        |3                |4                |0                        |4                           |0                      |1                      |\n|945206        |1                |0                |0                        |0                           |0                      |1                      |\n|99739         |23               |2                |5                        |2                           |3                      |1                      |\n|27995         |21               |3                |3                        |3                           |3                      |2                      |\n|56815         |64               |7                |5                        |7                           |0                      |5                      |\n|943006        |1                |0                |0                        |0                           |0                      |0                      |\n|74691         |37               |0                |4                        |0                           |3                      |0                      |\n|930483        |1                |0                |0                        |0                           |0                      |0                      |\n|8111          |18               |0                |5                        |0                           |4                      |2                      |\n|27532         |0                |0                |0                        |0                           |0                      |0                      |\n|36042         |89               |15               |7                        |15                          |80                     |86                     |\n|990024        |1                |0                |0                        |0                           |0                      |0                      |\n|990102        |0                |0                |0                        |0                           |1                      |0                      |\n|57008         |4                |2                |1                        |2                           |0                      |0                      |\n|930586        |2                |1                |0                        |1                           |0                      |0                      |\n|942884        |4                |0                |0                        |0                           |0                      |0                      |\n|951606        |0                |0                |0                        |0                           |0                      |0                      |\n|37541         |42               |2                |2                        |2                           |2                      |0                      |\n|37042         |0                |0                |0                        |0                           |0                      |0                      |\n|71179         |20               |1                |5                        |1                           |0                      |0                      |\n|966966        |2                |2                |0                        |2                           |0                      |0                      |\n|6640          |16               |1                |1                        |1                           |0                      |0                      |\n|16294         |14               |0                |2                        |0                           |1                      |2                      |\n|28071         |10               |0                |1                        |0                           |0                      |4                      |\n|964796        |2                |0                |0                        |0                           |0                      |0                      |\n|6385          |13               |5                |4                        |5                           |3                      |3                      |\n|997385        |2                |0                |0                        |0                           |0                      |0                      |\n|46245         |26               |4                |1                        |4                           |2                      |2                      |\n|931550        |0                |0                |0                        |0                           |0                      |0                      |\n+--------------+-----------------+-----------------+-------------------------+----------------------------+-----------------------+-----------------------+\nonly showing top 100 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=271",
+              "$$hashKey": "object:11106"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=272",
+              "$$hashKey": "object:11107"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=273",
+              "$$hashKey": "object:11108"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=274",
+              "$$hashKey": "object:11109"
+            },
+            {
+              "jobUrl": "http://bigdatakwcluster-m.europe-west4-a.c.put-big-data-2022-10-kw.internal:35115/jobs/job?id=278",
+              "$$hashKey": "object:11110"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672408300236_454116803",
+      "id": "paragraph_1672408300236_454116803",
+      "dateCreated": "2022-12-30T13:51:40+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:10292",
+      "text": "val analysis3DF = factDF.\n    join(hgvsDF, \"count_point_id\").\n    join(roadDF, \"count_point_id\").\n    join(regionsDF, \"region_auth_id\")//.\n    // groupBy(col(\"road_category\"), regionsDF(\"region_name\"), $\"hgvs_2_rigid_axle\", $\"hgvs_3_rigid_axle\", $\"hgvs_4_or_more_rigid_axle\", $\"hgvs_3_or_4_articulated_axle\", $\"hgvs_5_articulated_axle\", $\"hgvs_6_articulated_axle\").\n    // agg(sum(\"sum_hgvs\").as(\"sum_trucks\"))\n    \nanalysis3DF.show(100, false)",
+      "dateUpdated": "2022-12-30T13:58:24+0000",
+      "dateFinished": "2022-12-30T13:58:31+0000",
+      "dateStarted": "2022-12-30T13:58:24+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+--------------+------------+--------+-----------------+-----------------+-------------------------+----------------------------+-----------------------+-----------------------+---------+-------------+-----------+\n|region_auth_id|count_point_id|timestamp_id|sum_hgvs|hgvs_2_rigid_axle|hgvs_3_rigid_axle|hgvs_4_or_more_rigid_axle|hgvs_3_or_4_articulated_axle|hgvs_5_articulated_axle|hgvs_6_articulated_axle|road_type|road_category|region_name|\n+--------------+--------------+------------+--------+-----------------+-----------------+-------------------------+----------------------------+-----------------------+-----------------------+---------+-------------+-----------+\n|30            |17055         |2003041014  |65      |12               |2                |4                        |2                           |1                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |12               |2                |4                        |2                           |1                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |12               |2                |4                        |2                           |1                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |15               |2                |1                        |2                           |4                      |6                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |15               |2                |1                        |2                           |4                      |6                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |15               |2                |1                        |2                           |4                      |6                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |18               |3                |4                        |3                           |3                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |18               |3                |4                        |3                           |3                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |18               |3                |4                        |3                           |3                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |25               |4                |5                        |4                           |9                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |25               |4                |5                        |4                           |9                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |25               |4                |5                        |4                           |9                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |9                |4                |0                        |4                           |4                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |9                |4                |0                        |4                           |4                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |9                |4                |0                        |4                           |4                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |3                |0                |1                        |0                           |2                      |5                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |3                |0                |1                        |0                           |2                      |5                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |3                |0                |1                        |0                           |2                      |5                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |21               |1                |3                        |1                           |1                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |21               |1                |3                        |1                           |1                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |21               |1                |3                        |1                           |1                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |13               |2                |3                        |2                           |6                      |4                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |13               |2                |3                        |2                           |6                      |4                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |13               |2                |3                        |2                           |6                      |4                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |21               |1                |5                        |1                           |1                      |0                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |21               |1                |5                        |1                           |1                      |0                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |21               |1                |5                        |1                           |1                      |0                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |25               |5                |5                        |5                           |5                      |0                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |25               |5                |5                        |5                           |5                      |0                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |25               |5                |5                        |5                           |5                      |0                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |15               |1                |7                        |1                           |5                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |15               |1                |7                        |1                           |5                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |15               |1                |7                        |1                           |5                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |26               |2                |4                        |2                           |1                      |0                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |26               |2                |4                        |2                           |1                      |0                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |26               |2                |4                        |2                           |1                      |0                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |5                |1                |1                        |1                           |0                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |5                |1                |1                        |1                           |0                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |5                |1                |1                        |1                           |0                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |7                |3                |1                        |3                           |4                      |3                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |7                |3                |1                        |3                           |4                      |3                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |7                |3                |1                        |3                           |4                      |3                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |11               |2                |4                        |2                           |0                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |11               |2                |4                        |2                           |0                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |11               |2                |4                        |2                           |0                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |9                |1                |3                        |1                           |1                      |0                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |9                |1                |3                        |1                           |1                      |0                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |9                |1                |3                        |1                           |1                      |0                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |14               |1                |1                        |1                           |7                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |14               |1                |1                        |1                           |7                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |14               |1                |1                        |1                           |7                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |16               |1                |1                        |1                           |2                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |16               |1                |1                        |1                           |2                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |16               |1                |1                        |1                           |2                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |13               |0                |9                        |0                           |4                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |13               |0                |9                        |0                           |4                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |13               |0                |9                        |0                           |4                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |18               |6                |0                        |6                           |3                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |18               |6                |0                        |6                           |3                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |18               |6                |0                        |6                           |3                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |7                |3                |0                        |3                           |1                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |7                |3                |0                        |3                           |1                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |7                |3                |0                        |3                           |1                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |18               |3                |1                        |3                           |2                      |0                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |18               |3                |1                        |3                           |2                      |0                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |18               |3                |1                        |3                           |2                      |0                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |6                |2                |1                        |2                           |0                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |6                |2                |1                        |2                           |0                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |6                |2                |1                        |2                           |0                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |27               |4                |3                        |4                           |1                      |5                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |27               |4                |3                        |4                           |1                      |5                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |27               |4                |3                        |4                           |1                      |5                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |3                |0                |0                        |0                           |2                      |0                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |3                |0                |0                        |0                           |2                      |0                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |3                |0                |0                        |0                           |2                      |0                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |13               |0                |2                        |0                           |1                      |0                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |13               |0                |2                        |0                           |1                      |0                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |13               |0                |2                        |0                           |1                      |0                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |0                |1                |0                        |1                           |1                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |0                |1                |0                        |1                           |1                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |0                |1                |0                        |1                           |1                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |17               |2                |4                        |2                           |6                      |6                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |17               |2                |4                        |2                           |6                      |6                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |17               |2                |4                        |2                           |6                      |6                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |5                |0                |0                        |0                           |2                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |5                |0                |0                        |0                           |2                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |5                |0                |0                        |0                           |2                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |17               |5                |7                        |5                           |5                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |17               |5                |7                        |5                           |5                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |17               |5                |7                        |5                           |5                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |21               |1                |0                        |1                           |3                      |3                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |21               |1                |0                        |1                           |3                      |3                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |21               |1                |0                        |1                           |3                      |3                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |18               |2                |2                        |2                           |3                      |1                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |18               |2                |2                        |2                           |3                      |1                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |18               |2                |2                        |2                           |3                      |1                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |8                |4                |2                        |4                           |1                      |2                      |Major    |PA           |Scotland   |\n|30            |17055         |2003041014  |65      |8                |4                |2                        |4                           |1                      |2                      |Major    |PA           |South West |\n|30            |17055         |2003041014  |65      |8                |4                |2                        |4                           |1                      |2                      |Major    |PA           |North West |\n|30            |17055         |2003041014  |65      |6                |2                |6                        |2                           |4                      |3                      |Major    |PA           |Scotland   |\n+--------------+--------------+------------+--------+-----------------+-----------------+-------------------------+----------------------------+-----------------------+-----------------------+---------+-------------+-----------+\nonly showing top 100 rows\n\n\u001b[1m\u001b[34manalysis3DF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [region_auth_id: int, count_point_id: string ... 11 more fields]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "completionKey": "TAB",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1672408510918_261498197",
+      "id": "paragraph_1672408510918_261498197",
+      "dateCreated": "2022-12-30T13:55:10+0000",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:10623"
+    }
+  ],
+  "name": "Analysis_uk_traffic",
+  "id": "2HNGDXCJC",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.10.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Analysis_uk_traffic"
+}
