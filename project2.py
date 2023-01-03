@@ -17,6 +17,11 @@ with DAG(
     render_template_as_native_obj=True
 ) as dag:
 
+  clean_output_dir = BashOperator(
+    task_id="clean_output_dir",
+    bash_command="""if $(hadoop fs -test -d /tmp/delta/) ; then hadoop fs -rm -f -r /tmp/delta/; fi""",
+  )
+
   load_fact_table = BashOperator(
     task_id="load_fact_table",
     bash_command=""" spark-submit --packages io.delta:delta-core_2.12:2.1.0 \
@@ -102,7 +107,7 @@ with DAG(
   )
 
 
-
+clean_output_dir >> load_regions_dim
 load_regions_dim >> load_weather_dim
 load_weather_dim >> load_road_dim
 load_road_dim >> load_hgvs_dim
