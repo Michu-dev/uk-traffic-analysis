@@ -8,8 +8,7 @@ with DAG(
     "project2-workflow",
     start_date=datetime(2015, 12, 1),
     schedule_interval=None,
-    # TODO Uruchamiając projekt, za każdym razem w konfiguracji uruchomienia Apache Airflow popraw ścieżki w parametrach dags_home i input_dir
-    # TODO Zmień poniżej domyślne wartości parametrów classic_or_streaming oraz pig_or_hive na zgodne z Twoim projektem
+    # TODO Running the solution each time in the configuration of Apache Airflow script correct the paths in parameters jars_home and bucket_home
     params={
       "jars_home": Param("/home/<nazwa-uzytkownika>/airflow/dags/project_files", type="string"),
       "bucket_name": Param("<nazwa-zasobnika>", type="string"),
@@ -30,7 +29,7 @@ with DAG(
                                   --class UKTrafficAnalysis \
                                   --master yarn \
                                   --num-executors 8 \
-                                  --driver-memory 4g \
+                                  --driver-memory 64g \
                                   --executor-memory 2g \
                                   --executor-cores 2 \
                                   {{ params.jars_home }}/fact.jar {{ params.bucket_name }}"""
@@ -44,7 +43,7 @@ with DAG(
                                   --class UKTrafficAnalysis \
                                   --master yarn \
                                   --num-executors 8 \
-                                  --driver-memory 4g \
+                                  --driver-memory 64g \
                                   --executor-memory 2g \
                                   --executor-cores 2 \
                                   {{ params.jars_home }}/dim_road.jar {{ params.bucket_name }}"""
@@ -58,24 +57,24 @@ with DAG(
                                     --class UKTrafficAnalysis \
                                     --master yarn \
                                     --num-executors 8 \
-                                    --driver-memory 4g \
+                                    --driver-memory 64g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
                                     {{ params.jars_home }}/dim_weather.jar {{ params.bucket_name }}"""
     )
 
-  load_hgvs_dim = BashOperator(
-      task_id="load_hgvs_dim",
+  load_directions_dim = BashOperator(
+      task_id="load_directions_dim",
       bash_command=""" spark-submit --packages io.delta:delta-core_2.12:2.1.0 \
                                     --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
                                     --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
                                     --class UKTrafficAnalysis \
                                     --master yarn \
                                     --num-executors 8 \
-                                    --driver-memory 4g \
+                                    --driver-memory 64g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
-                                    {{ params.jars_home }}/dim_hgvs.jar {{ params.bucket_name }}"""
+                                    {{ params.jars_home }}/dim_directions.jar {{ params.bucket_name }}"""
     )
 
   load_regions_dim = BashOperator(
@@ -86,7 +85,7 @@ with DAG(
                                     --class UKTrafficAnalysis \
                                     --master yarn \
                                     --num-executors 8 \
-                                    --driver-memory 4g \
+                                    --driver-memory 64g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
                                     {{ params.jars_home }}/dim_regions.jar {{ params.bucket_name }}"""
@@ -100,7 +99,7 @@ with DAG(
                                     --class UKTrafficAnalysis \
                                     --master yarn \
                                     --num-executors 8 \
-                                    --driver-memory 4g \
+                                    --driver-memory 64g \
                                     --executor-memory 2g \
                                     --executor-cores 2 \
                                     {{ params.jars_home }}/dim_time.jar {{ params.bucket_name }}"""
@@ -110,6 +109,6 @@ with DAG(
 clean_output_dir >> load_regions_dim
 load_regions_dim >> load_weather_dim
 load_weather_dim >> load_road_dim
-load_road_dim >> load_hgvs_dim
-load_hgvs_dim >> load_time_dim
+load_road_dim >> load_directions_dim
+load_directions_dim >> load_time_dim
 load_time_dim >> load_fact_table
